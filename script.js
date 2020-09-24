@@ -17,13 +17,17 @@ function getResults(query) {
     fetch(`${api.base}weather?q=${query}&units=imperial&APPID=${api.key}`)
         .then(weather => {
             return weather.json();
-        }).then(displayResults);
+        }).then(displayResults).catch(alert('city not found'));
 }
 
 function displayResults(weather) {
 
+
     const vids = document.querySelectorAll(".video");
     console.log(vids);
+    for (let i = 0; i < vids.length; i++) {
+        console.log(vids[i].style.display = "none");
+    }
 
     let city = document.querySelector('.location .city');
     city.innerText = `${weather.name}, ${weather.sys.country}`;
@@ -41,36 +45,36 @@ function displayResults(weather) {
         weather_el.innerText = "Rain";
        
     } 
-    if (weather.weather[0].main == "Clear" && time > 6 && time < 19 ){
+    else if (weather.weather[0].main == "Clear" && time > 6 && time < 19 ){
         weather_el.innerText = "Day: Sunny";
     }
-    if (weather.weather[0].main == "Clear" && time < 6 || time > 19) {
+    else if (weather.weather[0].main == "Clear" && time < 6 || time > 19) {
         weather_el.innerText = "Night: Clear";
     }
-    if (weather.weather[0].main == "Clouds") {
+    else if (weather.weather[0].main == "Clouds") {
         weather_el.innerText = "Cloudy";
     }
-
+    
     else {
         weather_el.innerText = weather.weather[0].main;
     }
-    
+
     let rainVid = document.querySelector('.current .rainVideo');
     if (weather_el.innerText == "Rain") {
-        
+
         $(".rainVideo").css("display", "block");
     } else{
         $(".rainVideo").css("display", "none"); 
     }
-    
+
     let sunVid = document.querySelector('.current .sunVideo');
     if (weather_el.innerText == "Day: Sunny") {
-        
+
         $(".sunVideo").css("display", "block");
     } else {
         $(".sunVideo").css("display", "none");
     }
-    
+
     let hotVid  = document.querySelector('.current .hotVideo');
     if (Math.round(weather.main.temp) >= 85){
         $(".hotVideo").css("display", "block");
