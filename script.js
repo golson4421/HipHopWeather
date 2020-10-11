@@ -17,7 +17,7 @@ function getResults(query) {
     fetch(`${api.base}weather?q=${query}&units=imperial&APPID=${api.key}`)
         .then(weather => {
             return weather.json();
-        }).then(displayResults).catch(alert('city not found'));
+        }).then(displayResults);
 }
 
 function displayResults(weather) {
@@ -63,6 +63,7 @@ function displayResults(weather) {
     if (weather_el.innerText == "Rain") {
 
         $(".rainVideo").css("display", "block");
+        
     } else{
         $(".rainVideo").css("display", "none"); 
     }
@@ -74,6 +75,7 @@ function displayResults(weather) {
     } else {
         $(".sunVideo").css("display", "none");
     }
+
 
     let hotVid  = document.querySelector('.current .hotVideo');
     if (Math.round(weather.main.temp) >= 85){
